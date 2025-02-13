@@ -1,11 +1,13 @@
 "use client"
 import React, {ChangeEvent, useState, useEffect} from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useSession } from '@/lib/auth-client'
+import Navbar from '../_components/Navbar'
 const page = () => {
   const {data:session,isPending }=useSession();
   console.log("mydata",session)
   const router=useRouter();
+  const currentPath=usePathname();
   const [description, setDescription]=useState("");
   const [file, setFile]=useState<any>();
   const [error, setError]=useState("");
@@ -63,23 +65,23 @@ const page = () => {
   return (
     <div className="min-h-screen min-w-screen w-full bg-slate-100">
       <div className="flex">
-        <div>
+        {/* <div>
           <h1 className="text-blue-500 font-bold p-6 text-2xl">CodeCraft</h1>
           <p className="text-black">Build Awesome</p>
           <div>
             <div className="flex flex-col gap-3">
-            <div className="hover:bg-slate-300 rounded px-3">
+            <div className={currentPath=='/dashboard'?"bg-slate-300 rounded px-3":"hover:bg-slate-200 rounded px-3"}>
             <img src="home.png" className="w-10 h-10"/>
             <h1 className="text-black font-bold">Workspace</h1>
             
             </div>
-          <div className="hover:bg-slate-300 px-3">
+          <div className={currentPath=='/design'?"bg-slate-300 rounded px-3":"hover:bg-slate-200 rounded px-3"}>
             <img src="layers.png" className="w-10 h-10"/>
             <h1 className="text-black font-bold">Design</h1>
             
             
             </div>
-            <div className="hover:bg-slate-300 px-3 cursor-pointer">
+            <div className={currentPath=='/credits'?"bg-slate-300 rounded px-3": "hover:bg-slate-200 rounded px-3"}>
             <img src="credit.png" className="w-10 h-10"/>
             <h1 className="text-black font-bold">Credits</h1>
             
@@ -93,7 +95,8 @@ const page = () => {
 
          
 
-        </div>
+        </div> */}
+        <Navbar/>
 
         <div className=" min-h-screen bg-white w-full">
           <div className="flex justify-around gap-2">
