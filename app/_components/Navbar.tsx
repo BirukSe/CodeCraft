@@ -5,7 +5,7 @@ const Navbar = () => {
     const router=useRouter();
     const currentPath=usePathname();
   return (
-    <div>
+    <div className="w-[45%]">
     <h1 className="text-blue-500 font-bold p-6 text-2xl">CodeCraft</h1>
     <p className="text-black">Build Awesome</p>
     <div>
