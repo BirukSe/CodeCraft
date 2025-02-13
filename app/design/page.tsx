@@ -2,8 +2,10 @@
 import React, { useRef, useState } from 'react';
 import { useSession } from '@/lib/auth-client';
 import Navbar from '../_components/Navbar';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
+    const router=useRouter();
   const { data: session, isPending } = useSession();
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading]=useState(false);
@@ -39,32 +41,47 @@ const Page = () => {
 
   // Convert canvas to image and send it with description
   const convertToCode = async () => {
-    const canvas = canvasRef.current;
-    const imageData = await canvas.toDataURL(); // Get the image data from the canvas
-
-    // Create a FormData object
-    const formData = new FormData();
-    formData.append('file', imageData); // Append the image data
-    formData.append('description', description); // Append the description
-
-    // Send the FormData to your endpoint
     try{
         setIsLoading(true);
-
-    }catch(error){
-        console.log(error);
-    }
-    finally{
-        setIsLoading(false);
-
-    }
+    console.log("i am in the function")
+    const canvas = canvasRef.current;
+    const imageData = await canvas.toDataURL(); 
+    console.log("my image", imageData);// Get the image data from the canvas
+    function dataURLtoBlob(dataURL) {
+        const byteString = atob(dataURL.split(',')[1]);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uintArray = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+          uintArray[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([arrayBuffer], { type: "image/png" });
+      }
+    // Create a FormData object
+    const formData = new FormData();
+    formData.append('file', dataURLtoBlob(imageData)); // Append the image data
+    formData.append('description', description); // Append the description
+console.log(formData);
+    // Send the FormData to your endpoint
+   
     const response = await fetch('/api/upload', {
       method: 'POST',
       body: formData,
     });
 
     const result = await response.json();
-    console.log('Converted Code:', result.code); // Example result from backend
+    if(!result){
+        console.log("Something went wrong, Please try again")
+        return;
+    }
+    localStorage.setItem("code", result.generatedCode);
+   router.push('/result')
+
+    }catch(error){
+        console.log(error);
+    }finally{
+        setIsLoading(false);
+    }
+    
   };
 
   return (
@@ -109,7 +126,7 @@ const Page = () => {
             className="px-6 py-3 bg-blue-500 text-white rounded w-full max-w-lg"
             onClick={convertToCode}
           >
-            {isLoading?"Converting": "Convert to code"}
+            {isLoading?"Converting...": "Convert to code"}
           </button>
         </div>
       </div>
