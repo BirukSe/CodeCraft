@@ -13,7 +13,7 @@ const Page = () => {
   const [description, setDescription] = useState(""); // To capture the description from the user
 
   // Handle drawing start
-  const startDrawing = (e) => {
+  const startDrawing = (e:any) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
@@ -21,7 +21,7 @@ const Page = () => {
   };
 
   // Handle drawing
-  const draw = (e) => {
+  const draw = (e:any) => {
     if (!drawing) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -35,7 +35,7 @@ const Page = () => {
   };
 
   // Handle description change
-  const handleDescriptionChange = (e) => {
+  const handleDescriptionChange = (e:any) => {
     setDescription(e.target.value);
   };
 
