@@ -1,3 +1,4 @@
+"use client"
 import React, { useRef, useState, useEffect } from 'react';  
 import { useSession } from '@/lib/auth-client';  
 import Navbar from '../_components/Navbar';  
