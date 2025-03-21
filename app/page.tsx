@@ -4,6 +4,7 @@ import { signIn } from "@/lib/auth-client"
 import { motion } from "framer-motion"
 import { ArrowRight, Code, Sparkles, Zap, Layers, MessageSquare, ChevronRight, Github, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DashboardMockup from "@/components/ui/dashboard-mockup"
 
 export default function LandingPage() {
   const handleSignIn = async () => {
@@ -131,12 +132,8 @@ export default function LandingPage() {
               <div className="relative">
                 <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-30 blur-xl"></div>
                 <div className="relative rounded-xl bg-white p-2 shadow-2xl">
-                  <div className="aspect-[16/9] overflow-hidden rounded-lg bg-slate-100">
-                    <img
-                      src="/placeholder.svg?height=500&width=800"
-                      alt="CodeCraft Dashboard Preview"
-                      className="h-full w-full object-cover"
-                    />
+                  <div className="aspect-[16/9] overflow-hidden rounded-lg">
+                    <DashboardMockup />
                   </div>
                 </div>
               </div>
